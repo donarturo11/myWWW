@@ -3,14 +3,17 @@ require_once("CsvHandler.php");
 
 class CsvMap extends CsvHandler
 {
-	public function init(){
-		$this->loadKeys();
-		$this->loadRowNames();
 
-	}
+        public function initCsv($filename, $separator){
+               $this->readFile($filename);
+               $this->setColSeparator($separator);
+               $this->parseCsv();
+               $this->loadKeys();
+               $this->loadRowNames();
+               $this->createMap();
+        }
 
-	public function createMap(){
-		$this->init();
+        public function createMap(){
 		$keys=$this->keys;
 	    $rowNames=$this->rowNames;
 		$rows;

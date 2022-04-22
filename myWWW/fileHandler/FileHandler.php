@@ -4,6 +4,7 @@ class FileHandler
 {
     public function readFile($fileName){
 	$_fileExists=file_exists($fileName);
+        $this->fileString="";
 	if ($_fileExists ) { 
 	    $file = fopen($fileName,"r");
 	    

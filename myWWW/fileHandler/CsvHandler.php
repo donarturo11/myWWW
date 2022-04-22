@@ -8,6 +8,12 @@ class CsvHandler extends FileHandler
 	$this->colSeparator=",";
     }
 
+  public function initCsv($filename, $separator){
+  $this->readFile($filename);
+  $this->setColSeparator($separator);
+  $this->parseCsv();
+  }
+
     public function setColSeparator($char){
 	$this->colSeparator=$char;
     }
