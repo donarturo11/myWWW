@@ -53,12 +53,13 @@ class PageTemplate extends HtmlDocument
    $path=$this->pathContents;
    $lang=$this->lang;
    $textString="";
+   $id="";
    $textFiles=array_diff(scandir($path), array(".", ".."));
    foreach($textFiles as $file){
       if ($file=="files.csv"){continue;}
       if (!stripos($file, "$lang")) {continue;}
-
-      $textString.= "<p>";
+      $id=str_replace(".txt", "", $file);
+      $textString.= "<p id=\"$id\">";
       $this->bodyTextObject->readFile($path . $file);
       $textString.= $this->bodyTextObject->getFileString();
       $textString.= "</p>\n";
