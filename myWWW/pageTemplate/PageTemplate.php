@@ -12,14 +12,15 @@ class PageTemplate extends HtmlDocument
   $this->setName($name);
   $nameSuffix="Contents";
   $this->pathContents=$this->name . $nameSuffix . "/";
-  //$csvLocation=$this->pathContents . "files.csv";
-  $csvLocation="siteMap/siteMap.csv";
+
+  $csvLocation="siteMap/siteMap.csv"; // Move siteMap handling to seperate class
+
   $bodyText="";
 
-  $this->initCsv($csvLocation, ",");
+  $this->initCsv($csvLocation, ",");  // SiteMap class
   $this->initText();
 
-  $title=$this->csvMap->getMapItem($this->name, $this->lang);
+  $title=$this->csvMap->getMapItem($this->name, $this->lang); // SiteMap class
   $bodyText=$this->bodyTextObject->getFileString();
   $bodyText.=$this->getAllTextFiles();
 
@@ -29,6 +30,7 @@ class PageTemplate extends HtmlDocument
 
   }
 
+  // Move below method to SiteMap class
   public function initCsv($filename, $separator){
   $this->csvMap=new CsvMap;
   $this->csvMap->initCsv($filename, $separator);
@@ -41,7 +43,6 @@ class PageTemplate extends HtmlDocument
   $path=$this->pathContents;
   $basename=$this->name;
   $lang=$this->lang;
-  //$extension=$this->csvMap->getMapItem($basename, "extension");
   $extension="txt";
   $filename=$basename . "-" . $lang . "." . $extension;
   $this->bodyTextObject = new FileHandler;
@@ -50,18 +51,20 @@ class PageTemplate extends HtmlDocument
 
   public function getAllTextFiles(){
    $path=$this->pathContents;
+   $lang=$this->lang;
    $textString="";
    $textFiles=array_diff(scandir($path), array(".", ".."));
-   var_dump($textFiles);
    foreach($textFiles as $file){
       if ($file=="files.csv"){continue;}
-      $textString.= "\n=== begin $path/$file ===\n";
-      $textString.= "<b>$file</b>\n";
+      if (!stripos($file, "$lang")) {continue;}
+
       $textString.= "<p>";
       $this->bodyTextObject->readFile($path . $file);
       $textString.= $this->bodyTextObject->getFileString();
       $textString.= "</p>\n";
+
    }
+
    return $textString;
   }
 
@@ -73,12 +76,11 @@ class PageTemplate extends HtmlDocument
   $this->name=$name;
   }
 
-  protected $csvMap;
+  protected $csvMap; // move to SiteMap class and rename
   protected $bodyTextObject;
   protected $lang;
   protected $name;
   protected $pathContents;
-  //protected $textFiles;
 
 }
 
