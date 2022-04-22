@@ -1,0 +1,3 @@
+
+A oto jest kolejny tekst.<br>
+Skrypt trzeba dobrze wypróbować.<br>
