@@ -3,6 +3,7 @@
 require_once("HtmlDocument.php");
 require_once("fileHandler/CsvMap.php");
 require_once("fileHandler/FileHandler.php");
+require_once("fileHandler/MarkdownHandler.php");
 
 class PageTemplate extends HtmlDocument
 {
@@ -10,8 +11,8 @@ class PageTemplate extends HtmlDocument
 
   $this->setLang($lang);
   $this->setName($name);
-  $nameSuffix="Contents";
-  $this->pathContents=$this->name . $nameSuffix . "/";
+  $nameSuffix="contents";
+  $this->pathContents=$nameSuffix . "/" . $this->name . "/" ;
 
   $csvLocation="siteMap/siteMap.csv"; // Move siteMap handling to seperate class
 
@@ -45,7 +46,7 @@ class PageTemplate extends HtmlDocument
   $lang=$this->lang;
   $extension="txt";
   $filename=$basename . "-" . $lang . "." . $extension;
-  $this->bodyTextObject = new FileHandler;
+  $this->bodyTextObject = new MarkdownHandler;
   $this->bodyTextObject->readFile($path . $filename);
   }
 
@@ -61,7 +62,9 @@ class PageTemplate extends HtmlDocument
       $id=str_replace(".txt", "", $file);
       $textString.= "<p id=\"$id\">";
       $this->bodyTextObject->readFile($path . $file);
-      $textString.= $this->bodyTextObject->getFileString();
+      //$this->bodyTextObject->toHtml();
+      //$textString.= $this->bodyTextObject->getFileString();
+      $textString.= $this->bodyTextObject->getHtmlString();
       $textString.= "</p>\n";
 
    }
