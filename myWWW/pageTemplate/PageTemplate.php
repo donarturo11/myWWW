@@ -1,6 +1,7 @@
 <?php
 
 require_once("HtmlDocument.php");
+require_once("NavigationBar.php");
 require_once("fileHandler/CsvMap.php");
 require_once("fileHandler/FileHandler.php");
 require_once("fileHandler/MarkdownHandler.php");
@@ -22,7 +23,11 @@ class PageTemplate extends HtmlDocument
   $this->initText();
 
   $title=$this->csvMap->getMapItem($this->name, $this->lang); // SiteMap class
-  $bodyText=$this->bodyTextObject->getFileString();
+  $this->initNavbar();
+  $bodyText="";
+  $bodyText.=$this->getNavbar() . "\n";
+  $bodyText.=$this->getLangChoose() . "\n";
+  $bodyText.=$this->bodyTextObject->getFileString();
   $bodyText.=$this->getAllTextFiles();
 
   $this->setTitle($title);
@@ -31,29 +36,43 @@ class PageTemplate extends HtmlDocument
 
   }
 
+  private function initNavbar(){
+      $this->navbar=new NavigationBar($this->name, $this->lang);
+  }
+  
+  private function getNavbar(){
+      $navbarHtml="";
+      $navbarHtml.=$this->navbar->getString();
+      
+      return $navbarHtml;
+  }
+  
+  
   // Move below method to SiteMap class
   public function initCsv($filename, $separator){
   $this->csvMap=new CsvMap;
   $this->csvMap->initCsv($filename, $separator);
-
   $this->csvMap->loadKeys();
   $this->csvMap->createMap();
   }
 
   public function initText(){
-  $path=$this->pathContents;
-  $basename=$this->name;
-  $lang=$this->lang;
-  $extension="txt";
-  $filename=$basename . "-" . $lang . "." . $extension;
+  //$path=$this->pathContents;
+  //$basename=$this->name;
+  //$lang=$this->lang;
+  //$extension="txt";
+  //$filename=$basename . "-" . $lang . "." . $extension;
   $this->bodyTextObject = new MarkdownHandler;
-  $this->bodyTextObject->readFile($path . $filename);
+  //$this->bodyTextObject->readFile($path . $filename);
   }
 
   public function getAllTextFiles(){
    $path=$this->pathContents;
    $lang=$this->lang;
    $textString="";
+   
+   $textString.="<div class=\"navbar\">";
+   
    $id="";
    $textFiles=array_diff(scandir($path), array(".", ".."));
    foreach($textFiles as $file){
@@ -68,10 +87,12 @@ class PageTemplate extends HtmlDocument
       $textString.= "</p>\n";
 
    }
+   
+   $textString.="</div>\n";
 
    return $textString;
   }
-
+  
   public function setLang($lang){
   $this->lang=$lang;
   }
@@ -79,12 +100,23 @@ class PageTemplate extends HtmlDocument
   public function setName($name){
   $this->name=$name;
   }
+  
+  
+  
+  private function getLangChoose(){
+      $langHtml="";
+      $langHtml.="<p>language $this->lang</p>";
+      
+      return $langHtml;
+  }
 
   protected $csvMap; // move to SiteMap class and rename
   protected $bodyTextObject;
+  protected $navbarString;
   protected $lang;
   protected $name;
   protected $pathContents;
+  protected $navbar;
 
 }
 
