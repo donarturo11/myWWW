@@ -68,6 +68,10 @@ class CsvMap extends CsvHandler
 		return $colArray;
 
 	}
+    
+    public function getRowNames(){
+        return $this->rowNames;
+    }
 
 
 	public function loadKeys(){
