@@ -9,9 +9,13 @@ require_once("fileHandler/MarkdownHandler.php");
 class PageTemplate extends HtmlDocument
 {
   function __construct($name, $lang="en") {
-
-  $this->setLang($lang);
   $this->setName($name);
+  if ($_GET && $_GET["lang"]) {
+      $this->setLang($_GET["lang"]);
+  } else {
+      $this->setLang($lang);
+  }
+  
   $nameSuffix="contents";
   $this->pathContents=$nameSuffix . "/" . $this->name . "/" ;
 
@@ -23,8 +27,10 @@ class PageTemplate extends HtmlDocument
   $this->initText();
 
   $title=$this->csvMap->getMapItem($this->name, $this->lang); // SiteMap class
+  
   $this->initNavbar();
   $bodyText="";
+  
   $bodyText.=$this->getNavbar() . "\n";
   $bodyText.=$this->getLangChoose() . "\n";
   $bodyText.=$this->bodyTextObject->getFileString();
@@ -104,8 +110,24 @@ class PageTemplate extends HtmlDocument
   
   
   private function getLangChoose(){
+      $languages=array("en", "pl");
+      $filename=$this->name . ".php";
+      $flag="";
       $langHtml="";
-      $langHtml.="<p>language $this->lang</p>";
+      $langHtml.="<div class=\"langbar\">";
+      if ($this->lang=="pl"){
+          $langHtml.="Wybierz język: ";
+      } else {
+          $langHtml.="Choose language: ";
+      }
+      foreach( $languages as $lang){
+          if ($this->lang==$lang){
+              $flag="-current";
+          } else {
+              $flag="";
+          }
+          $langHtml.="<a href=\"$filename?lang=$lang\" class=\"langbar$flag\">$lang</a> \n";
+      }
       
       return $langHtml;
   }
