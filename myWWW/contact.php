@@ -1,4 +1,4 @@
 <?php
-require_once("pageTemplate/PageTemplate.php");
-$htmlDoc=new PageTemplate("contact", "pl");
+require_once("pageTemplate/ContactTemplate.php");
+$htmlDoc=new ContactTemplate("contact", "pl");
 ?>
