@@ -42,11 +42,11 @@ class PageTemplate extends HtmlDocument
 
   }
 
-  private function initNavbar(){
+  public function initNavbar(){
       $this->navbar=new NavigationBar($this->name, $this->lang);
   }
   
-  private function getNavbar(){
+  public function getNavbar(){
       $navbarHtml="";
       $navbarHtml.=$this->navbar->getString();
       
@@ -107,9 +107,7 @@ class PageTemplate extends HtmlDocument
   $this->name=$name;
   }
   
-  
-  
-  private function getLangChoose(){
+  public function getLangChoose(){
       $languages=array("en", "pl");
       $filename=$this->name . ".php";
       $flag="";
