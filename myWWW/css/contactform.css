@@ -1,0 +1,16 @@
+.form-input {
+    width: 300px;
+}
+
+/*#contact-form-text,*/
+textarea.form-textarea {
+    width: 500px;
+    height: 300px;
+}
+
+.form-button {
+    padding: 3px;
+    width: 100px;
+    height: 30px;
+}
+

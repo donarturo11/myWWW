@@ -1,0 +1,1 @@
+TuningTrainer to mały i prosty program do ćwiczenia systemów temperacji, polecany dla klawesynistów, organistów oraz innych zainteresowanych muzyką dawną.

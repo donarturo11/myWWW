@@ -1,0 +1,10 @@
+.form-button,
+.form-textarea,
+.form-input {
+    background: #180042;
+    color: #ffff42;
+}
+
+.form-button:hover {
+    background: #a50063;
+}

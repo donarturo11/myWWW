@@ -1,0 +1,48 @@
+.contents
+{
+    padding-left: 10px;
+    padding-top: 10px;
+    height: 70%;
+    justify-content: left;
+    flex: 1 1 auto;
+}
+
+/*a.navbar-item,
+a.navbar-item-current,
+a.langbar-item,
+a.langbar-item-current,*/
+
+.navbar, .langbar
+{
+    padding: 5px;
+}
+
+.navbar-link,
+.navbar-link-current,
+.langbar-link,
+.langbar-link-current
+{
+    text-decoration: none;
+    /* margin: 3px;*/
+    /*padding: 5px;*/
+}
+
+.navbar-item,
+.navbar-item-current,
+.langbar-item,
+.langbar-item-current
+{
+    margin: 1px;
+    padding: 5px;
+    width: 100px;
+    /* border-style: dotted; */
+}
+
+.link-item {
+    padding: 0px;
+    margin: 5px;
+    width: 600px;
+    /* border-style: dotted; */
+}
+
+

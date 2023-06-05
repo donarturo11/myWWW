@@ -1,0 +1,54 @@
+@import 'formcolors.css';
+
+body {
+    background: #180042;
+    /*background: #ffffff;*/
+    color: #c0c0c0;
+}
+
+a {
+   color: #7bc618;
+}
+
+.link-item {
+    background: #08296b;
+    color: #e5f053;
+}
+
+.navbar,
+.navbar-current,
+.langbar,
+.langbar-current
+{
+    background: #08296b;
+}
+
+.contents {
+    background: #06225a;
+    color: #808080;
+}
+
+.langbar-item:hover,
+.navbar-item:hover {
+    background: #a50063;
+}
+
+.navbar-item {
+background: #21004a;
+color: #94d6ef;
+}
+
+.navbar-item-current {
+    background: #6b6b21;
+    color: #94d6ef;
+}
+
+.langbar-item {
+    background: #21004a;
+    color: #94d6ef;
+}
+
+.langbar-item-current {
+    background: #6b6b21;
+    color: #94d6ef;
+}

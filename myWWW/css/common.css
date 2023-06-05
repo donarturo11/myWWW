@@ -1,0 +1,32 @@
+@import 'colors.css';
+@import 'margins.css';
+@import 'contactform.css';
+/*
+div, span
+{
+    z-index: -1;
+}
+*/
+/*
+span
+{
+    z-index: 1;
+}
+
+.contents {
+   z-index: 1;
+}
+*/
+.navbar-current,
+.langbar-current
+{
+   font-weight: bold;
+}
+
+.navbar,
+.langbar
+{
+   font-weight: normal;
+}
+
+
