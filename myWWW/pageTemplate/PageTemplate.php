@@ -29,16 +29,31 @@ class PageTemplate extends HtmlDocument
   $title=$this->csvMap->getMapItem($this->name, $this->lang); // SiteMap class
   
   $this->initNavbar();
+
+  $cssFile="css/";
+  if (isMobile()) {
+      $cssFile.="mobile";
+  } else {
+      $cssFile.="desktop";
+  }
+  $cssFile.=".css";
+
+  $headText="";
+  $headText.="<link rel=\"stylesheet\" href=\"${cssFile}\">";
+
   $bodyText="";
   
   $bodyText.=$this->getNavbar() . "\n";
   $bodyText.=$this->getLangChoose() . "\n";
+  //$bodyText.="<p>Mobile: " . isMobile() . "</p>\n";
   $bodyText.=$this->bodyTextObject->getFileString();
   $bodyText.=$this->getAllTextFiles();
 
   $this->setTitle($title);
+  $this->setHeadSection($headText);
   $this->setBodySection($bodyText);
-  $this->printHtmlDocument();
+
+//  $this->printHtmlDocument();
 
   }
 
@@ -77,18 +92,29 @@ class PageTemplate extends HtmlDocument
    $lang=$this->lang;
    $textString="";
    
-   $textString.="<div class=\"navbar\">";
+   $textString.="<div class=\"contents\">";
    
    $id="";
    $textFiles=array_diff(scandir($path), array(".", ".."));
    foreach($textFiles as $file){
       if ($file=="files.csv"){continue;}
-      if (!stripos($file, "$lang")) {continue;}
-      $id=str_replace(".txt", "", $file);
-      $textString.= "<p id=\"$id\">";
+
       $this->bodyTextObject->readFile($path . $file);
+      $id=str_replace(".txt", "", $file);
+
+      if (stripos($file, ".html")) {
+          $textString.= "<p id=\"$id\">";
+          //$textString.="HTML contents";
+          $textString.= $this->bodyTextObject->getFileString();
+          $textString.= "</p>";
+      }
+
+      if (!stripos($file, "$lang")) {continue;}
+
+
+      $textString.= "<p id=\"$id\">";
       //$this->bodyTextObject->toHtml();
-      //$textString.= $this->bodyTextObject->getFileString();
+      //
       $textString.= $this->bodyTextObject->getHtmlString();
       $textString.= "</p>\n";
 
@@ -113,20 +139,28 @@ class PageTemplate extends HtmlDocument
       $flag="";
       $langHtml="";
       $langHtml.="<div class=\"langbar\">";
-      if ($this->lang=="pl"){
+      /*if ($this->lang=="pl"){
           $langHtml.="Wybierz język: ";
       } else {
           $langHtml.="Choose language: ";
       }
+      */
       foreach( $languages as $lang){
           if ($this->lang==$lang){
               $flag="-current";
           } else {
               $flag="";
           }
-          $langHtml.="<a href=\"$filename?lang=$lang\" class=\"langbar$flag\">$lang</a> \n";
+          $langHtml.= "<a href=\"$filename?lang=$lang\" class=\"langbar-link$flag\">";
+          $langHtml.= "<span class=\"langbar-item$flag\">";
+          $langHtml.= "$lang";
+          $langHtml.= "</span>";
+          $langHtml.= "</a>";
+          $langHtml.= "\n";
+          
+          
       }
-      
+      $langHtml.="</div>";
       return $langHtml;
   }
 
@@ -137,6 +171,7 @@ class PageTemplate extends HtmlDocument
   protected $name;
   protected $pathContents;
   protected $navbar;
+  protected $mobileVersion;
 
 }
 

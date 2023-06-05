@@ -39,8 +39,14 @@ class NavigationBar {
       
       
       $hyperlink="";
+      $hyperlink .= "<a href=\"$hyperlinkUrl?lang=$this->lang\" class=\"navbar-link$flag\">";
+      $hyperlink .= "<span class=\"navbar-item$flag\">";
+      $hyperlink .= "$itemTitle";
+      $hyperlink .= "</a>\n";
+      $hyperlink .= "</span>\n";
       
-      $hyperlink .= "<a href=\"$hyperlinkUrl?lang=$this->lang\" class=\"navbar$flag\">$itemTitle</a>\n";
+      //$hyperlink .= "<span style=\"width: 20\">==</span>\n";
+      $hyperlink .= "\n";
       
       
       return $hyperlink;
@@ -51,7 +57,7 @@ class NavigationBar {
   public function setString(){
       $str="\n";
       $str.="<div class=\"navbar\">\n";
-      $str.="<p>navbar - $this->currentTitle</p>\n";
+      //$str.="<p>navbar - $this->currentTitle</p>\n";
       //$str.=$this->getLink("index");
       //$str.=$this->getLink("about");
       //$str.=var_dump($this->siteMap->getRowNames());
