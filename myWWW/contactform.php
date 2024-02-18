@@ -26,7 +26,7 @@ $date = date("r");
 header('Content-Type: text/html; charset=utf-8');
 header( "refresh:3;url=contact.php?lang=$lang" );
 
-mail("arturwrona91@gmail.com", 
+mail("id@domain.com", 
       $subject, 
       $text);
 
